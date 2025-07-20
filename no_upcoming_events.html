@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #8e44ad;
+            --background-color: #ecf0f1;
+            --text-color: #2c3e50;
+            --card-background: #ffffff;
+            --hover-color: #34495e;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 30px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-color);
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .search-container {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            box-shadow: 0 6px 8px rgba(44, 62, 80, 0.3);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+        }
+
+        #events-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .event-card {
+            background-color: var(--card-background);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-card h3 {
+            color: var(--primary-color);
+            margin: 0 0 10px;
+        }
+
+        .event-card p {
+            margin: 5px 0;
+            color: var(--text-color);
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .back-button::before {
+            content: '←';
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+
+        .back-button:hover {
+            background-color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .no-events-message {
+            text-align: center;
+            font-size: 1.2em;
+            color: var(--text-color);
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            #events-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="javascript:history.back()" class="back-button">Back</a>
+        <h1>Student Dashboard</h1>
+        <p class="subtitle">Discover and Join Exciting Club Events!</p>
+
+        <div class="search-container">
+            <input 
+                type="text" 
+                id="searchBar" 
+                class="search-bar" 
+                placeholder="Search by club name..." 
+                onkeyup="searchEvents()"
+            >
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+        </div>
+
+        <div id="events-container">
+            <div class="no-events-message" id="no-events-message">No upcoming events</div>
+        </div>
+    </div>
+
+    <script>
+        const events = [
+            { title: "No upcoming events", description: "There are no upcoming events at the moment. Please check back later."},
+        ];
+
+        function displayEvents(filteredEvents) {
+            const eventsContainer = document.getElementById("events-container");
+            const noEventsMessage = document.getElementById("no-events-message");
+
+            eventsContainer.innerHTML = "";
+
+            if (filteredEvents.length === 0) {
+                noEventsMessage.style.display = 'block';
+            } else {
+                noEventsMessage.style.display = 'none';
+                filteredEvents.forEach(event => {
+                    const eventCard = document.createElement('div');
+                    eventCard.classList.add('event-card');
+                    eventCard.innerHTML = `
+                        <h3>${event.title}</h3>
+                        <p>${event.description}</p>
+                    `;
+                    eventsContainer.appendChild(eventCard);
+                });
+            }
+        }
+
+        function searchEvents() {
+            const searchQuery = document.getElementById('searchBar').value.toLowerCase();
+
+            const filteredEvents = events.filter(event => event.title.toLowerCase().includes(searchQuery));
+
+            displayEvents(filteredEvents);
+        }
+
+        displayEvents(events);
+    </script>
+</body>
+</html>

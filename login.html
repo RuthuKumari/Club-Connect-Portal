@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Clubs Login and Signup</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333333;
+            background-color: #f0f0f0;
+            background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+        .club-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 2;
+        }
+        .club-icon {
+            position: absolute;
+            opacity: 0.7;
+            animation: float 15s infinite;
+            color: white;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            max-width: 400px;
+            width: 100%;
+            animation: fadeIn 1s ease-in-out;
+            z-index: 3;
+            position: relative;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 1rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        input, select {
+            padding: 0.8rem;
+            margin-top: 0.5rem;
+            border: 1px solid #bdc3c7;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+        button {
+            margin-top: 1.5rem;
+            padding: 0.8rem;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background-color: #3498db;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .toggle-form {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        .toggle-form a {
+            color: #3498db;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .toggle-form a:hover {
+            color: #2c3e50;
+            text-decoration: underline;
+        }
+        .forgot-password {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .forgot-password a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="login-form">
+            <h1>College Clubs Login</h1>
+            <form onsubmit="return login(event)">
+                <label for="login-type">Login as:</label>
+                <select id="login-type" required>
+                    <option value="">--select role--</option>
+                    <option value="faculty">Faculty Coordinator</option>
+                    <option value="coordinator">Club Coordinator</option>
+                    <option value="student">Student Member</option>
+                </select>
+                <label for="login-email">Email:</label>
+                <input type="email" id="login-email" placeholder="Enter your email" required>
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" placeholder="Enter your password" required>
+                <button type="submit">Login</button>
+            </form>
+            <div class="forgot-password">
+                <a href="#" onclick="forgotPassword()">Forgot Password?</a>
+            </div>
+            <div class="toggle-form">
+                <a href="#" onclick="toggleForm('signup-form')">New to College Clubs? Sign up</a>
+            </div>
+        </div>
+
+        <div id="signup-form" style="display: none;">
+            <h1>Join College Clubs</h1>
+            <form onsubmit="return signup(event)">
+                <label for="signup-type">Sign-up as:</label>
+                <select id="signup-type" required>
+                    <option value="">--select role--</option>
+                    <option value="faculty">Faculty Coordinator</option>
+                    <option value="coordinator">Club Coordinator</option>
+                    <option value="student">Student Member</option>
+                </select>
+                <label for="signup-name">Name:</label>
+                <input type="text" id="signup-name" placeholder="Enter your name" required>
+                <label for="signup-email">Email:</label>
+                <input type="email" id="signup-email" placeholder="Enter your email" required>
+                <label for="signup-id">Student/Faculty ID:</label>
+                <input type="text" id="signup-id" placeholder="Enter your ID number" required>
+                <label for="signup-phone">Phone Number:</label>
+                <input type="tel" id="signup-phone" placeholder="Enter your phone number" required>
+                <label for="signup-password">Password:</label>
+                <input type="password" id="signup-password" placeholder="Enter your password" required>
+                <button type="submit">Sign Up</button>
+            </form>
+            <div class="toggle-form">
+                <a href="#" onclick="toggleForm('login-form')">Already a member? Login</a>
+            </div>
+        </div>
+    </div>
+    <script>
+    function login(event) {
+        event.preventDefault();
+        const loginType = document.getElementById('login-type').value;
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        
+        console.log(`Login attempt as ${loginType}:`, { email, password });
+        
+        
+        if (loginType && email && password) {
+            localStorage.setItem('role', loginType);
+            
+            alert('Login successful!');
+            
+            window.location.href = 'home.html';
+        } else {
+            alert('Please fill in all fields!');
+        }
+    }
+
+    
+function login(event) {
+    event.preventDefault();
+    const loginType = document.getElementById('login-type').value;
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+    
+    console.log(`Login attempt as ${loginType}:`, { email, password });
+    
+    
+    if (loginType && email && password) {
+        localStorage.setItem('role', loginType);
+        
+        alert('Login successful!');
+        
+        window.location.href = 'home.html';
+    } else {
+        alert('Please fill in all fields!');
+    }
+}
+
+function signup(event) {
+    event.preventDefault();
+    
+    const signupType = document.getElementById('signup-type').value;
+    const name = document.getElementById('signup-name').value;
+    const email = document.getElementById('signup-email').value;
+    const userId = document.getElementById('signup-id').value;
+    const phone = document.getElementById('signup-phone').value;
+    const password = document.getElementById('signup-password').value;
+
+    console.log(`Sign-up attempt as ${signupType}:`, { name, email, userId, phone, password });
+    
+    
+    if (signupType && name && email && userId && phone && password) {
+        localStorage.setItem('signup-info', JSON.stringify({ signupType, name, email, userId, phone, password }));
+        
+        alert('Sign-up successful!');
+        
+        window.location.href = '#login-form';
+    } else {
+        alert('Please fill in all fields!');
+    }
+}
+
+function toggleForm(formId) {
+    document.getElementById('login-form').style.display = (formId === 'login-form') ? 'block' : 'none';
+    document.getElementById('signup-form').style.display = (formId === 'signup-form') ? 'block' : 'none';
+}
+
+function forgotPassword() {
+    alert('Password recovery process goes here.');
+}
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinator Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #8e44ad;
+            --background-color: #ecf0f1;
+            --text-color: #2c3e50;
+            --card-background: #ffffff;
+            --hover-color: #34495e;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 30px;
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: var(--hover-color);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-color);
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        .search-bar-container {
+            position: relative;
+            max-width: 400px;
+            margin: 0 auto 20px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 10px 40px 10px 15px;
+            font-size: 16px;
+            border-radius: 25px;
+            border: 1px solid var(--primary-color);
+        }
+
+        .search-bar-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 18px;
+        }
+
+        .add-event-btn {
+            display: block;
+            margin: 0 auto 20px;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-event-btn:hover {
+            background-color: var(--hover-color);
+        }
+
+        #events-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .event {
+            background: var(--card-background);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .event:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .event h3 {
+            color: var(--primary-color);
+            font-size: 1.4em;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .event p {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .event-details {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .event-detail span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .event-detail i {
+            color: var(--secondary-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .action-buttons button {
+            flex: 1;
+            margin: 0 5px;
+            padding: 10px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-buttons button:hover {
+            background-color: var(--hover-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="back-button" onclick="goBack()">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <h1>Coordinator Dashboard</h1>
+        <p class="subtitle">Discover and Join Exciting Club Events!</p>
+
+        <div class="search-bar-container">
+            <input type="text" class="search-bar" id="search-bar" placeholder="Search by club name..." oninput="filterEvents()">
+            <i class="fas fa-search search-bar-icon"></i>
+        </div>
+
+        <button class="add-event-btn" onclick="addEvent()">Add Event</button>
+
+        <div id="events-container">
+            <div class="event">
+                <h3>Mathelets Club</h3>
+                <div class="event-details">
+                    <div class="event-detail">
+                        <span><i class="fas fa-calendar-alt"></i> Date: Jan 20, 2024</span>
+                    </div>
+                    <div class="event-detail">
+                        <span><i class="fas fa-clock"></i> Time: 10:00 AM - 1:00 PM</span>
+                    </div>
+                </div>
+                <p><strong>Event:</strong> Math Challenge 2024</p>
+                <p><strong>Venue:</strong> Room A101</p>
+                <p>Test your mathematical skills in a fun and competitive environment.</p>
+                <div class="action-buttons">
+                    <button onclick="modifyEvent(this)">Modify Event</button>
+                    <button onclick="deleteEvent(this)">Delete Event</button>
+                </div>
+            </div>
+
+            <div class="event">
+                <h3>ISTE Club</h3>
+                <div class="event-details">
+                    <div class="event-detail">
+                        <span><i class="fas fa-calendar-alt"></i> Date: Jan 25, 2024</span>
+                    </div>
+                    <div class="event-detail">
+                        <span><i class="fas fa-clock"></i> Time: 2:00 PM - 4:00 PM</span>
+                    </div>
+                </div>
+                <p><strong>Event:</strong> Tech Symposium</p>
+                <p><strong>Venue:</strong> Auditorium</p>
+                <p>Explore the latest trends in technology and engineering.</p><br>
+                <div class="action-buttons">
+                    <button onclick="modifyEvent(this)">Modify Event</button>
+                    <button onclick="deleteEvent(this)">Delete Event</button>
+                </div>
+            </div>
+
+            <div class="event">
+                <h3>Empathy Club</h3>
+                <div class="event-details">
+                    <div class="event-detail">
+                        <span><i class="fas fa-calendar-alt"></i> Date: Feb 1, 2024</span>
+                    </div>
+                    <div class="event-detail">
+                        <span><i class="fas fa-clock"></i> Time: 9:00 AM - 12:00 PM</span>
+                    </div>
+                </div>
+                <p><strong>Event:</strong> Compassion Workshop</p>
+                <p><strong>Venue:</strong> Room B202</p>
+                <p>Learn and practice empathy through interactive exercises.</p><br>
+                <div class="action-buttons">
+                    <button onclick="modifyEvent(this)">Modify Event</button>
+                    <button onclick="deleteEvent(this)">Delete Event</button>
+                </div>
+            </div>
+
+            <div class="event">
+                <h3>Psychology Club</h3>
+                <div class="event-details">
+                    <div class="event-detail">
+                        <span><i class="fas fa-calendar-alt"></i> Date: Feb 5, 2024</span>
+                    </div>
+                    <div class="event-detail">
+                        <span><i class="fas fa-clock"></i> Time: 3:00 PM - 5:00 PM</span>
+                    </div>
+                </div>
+                <p><strong>Event:</strong> Mind Matters Seminar</p>
+                <p><strong>Venue:</strong> Lecture Hall 1</p>
+                <p>Explore fascinating topics in psychology with expert speakers.</p><br>
+                <div class="action-buttons">
+                    <button onclick="modifyEvent(this)">Modify Event</button>
+                    <button onclick="deleteEvent(this)">Delete Event</button>
+                </div>
+            </div>
+
+            <div class="event">
+                <h3>Sports Club</h3>
+                <div class="event-details">
+                    <div class="event-detail">
+                        <span><i class="fas fa-calendar-alt"></i> Date: Feb 10, 2024</span>
+                    </div>
+                    <div class="event-detail">
+                        <span><i class="fas fa-clock"></i> Time: 10:00 AM - 4:00 PM</span>
+                    </div>
+                </div>
+                <p><strong>Event:</strong> Inter-College Sports Meet</p>
+                <p><strong>Venue:</strong> College Grounds</p>
+                <p>Compete in various sports and showcase your athletic skills.</p><br>
+                <div class="action-buttons">
+                    <button onclick="modifyEvent(this)">Modify Event</button>
+                    <button onclick="deleteEvent(this)">Delete Event</button>
+                </div>
+            </div>
+
+            <div class="event">
+                <h3>Music Club</h3>
+                <div class="event-details">
+                    <div class="event-detail">
+                        <span><i class="fas fa-calendar-alt"></i> Date: Feb 15, 2024</span>
+                    </div>
+                    <div class="event-detail">
+                        <span><i class="fas fa-clock"></i> Time: 6:00 PM - 9:00 PM</span>
+                    </div>
+                </div>
+                <p><strong>Event:</strong> Melody Night</p>
+                <p><strong>Venue:</strong> Open Air Theatre</p>
+                <p>Enjoy a night of musical performances by talented students.</p>
+                <div class="action-buttons">
+                    <button onclick="modifyEvent(this)">Modify Event</button>
+                    <button onclick="deleteEvent(this)">Delete Event</button>
+                </div>
+            </div>
+
+            <div class="event">
+                <h3>Dance Club</h3>
+                <div class="event-details">
+                    <div class="event-detail">
+                        <span><i class="fas fa-calendar-alt"></i> Date: Feb 20, 2024</span>
+                    </div>
+                    <div class="event-detail">
+                        <span><i class="fas fa-clock"></i> Time: 5:00 PM - 8:00 PM</span>
+                    </div>
+                </div>
+                <p><strong>Event:</strong> Dance Extravaganza</p>
+                <p><strong>Venue:</strong> College Auditorium</p>
+                <p>Witness breathtaking dance performances across various styles.</p>
+                <div class="action-buttons">
+                    <button onclick="modifyEvent(this)">Modify Event</button>
+                    <button onclick="deleteEvent(this)">Delete Event</button>
+                </div>
+            </div>
+
+            <div class="event">
+                <h3>Eco Club</h3>
+                <div class="event-details">
+                    <div class="event-detail">
+                        <span><i class="fas fa-calendar-alt"></i> Date: Feb 25, 2024</span>
+                    </div>
+                    <div class="event-detail">
+                        <span><i class="fas fa-clock"></i> Time: 9:00 AM - 1:00 PM</span>
+                    </div>
+                </div>
+                <p><strong>Event:</strong> Campus Clean-up Drive</p>
+                <p><strong>Venue:</strong> College Campus</p>
+                <p>Join us in making our campus cleaner and greener.</p><br>
+                <div class="action-buttons">
+                    <button onclick="modifyEvent(this)">Modify Event</button>
+                    <button onclick="deleteEvent(this)">Delete Event</button>
+                </div>
+            </div>
+
+            <div class="event">
+                <h3>Toastmasters Club</h3>
+                <div class="event-details">
+                    <div class="event-detail">
+                        <span><i class="fas fa-calendar-alt"></i> Date: Mar 1, 2024</span>
+                    </div>
+                    <div class="event-detail">
+                        <span><i class="fas fa-clock"></i> Time: 4:00 PM - 6:00 PM</span>
+                    </div>
+                </div>
+                <p><strong>Event:</strong> Public Speaking Workshop</p>
+                <p><strong>Venue:</strong> Seminar Hall</p>
+                <p>Improve your public speaking skills with expert guidance.</p><br>
+                <div class="action-buttons">
+                    <button onclick="modifyEvent(this)">Modify Event</button>
+                    <button onclick="deleteEvent(this)">Delete Event</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            // Implement the back functionality here
+            window.history.back();
+        }
+
+        function addEvent() {
+            const container = document.getElementById("events-container");
+            const newEvent = document.createElement("div");
+            newEvent.classList.add("event");
+            newEvent.innerHTML = `
+                <h3>New Event</h3>
+                <div class="event-details">
+                    <div class="event-detail">
+                        <span><i class="fas fa-calendar-alt"></i> Date: TBD</span>
+                    </div>
+                    <div class="event-detail">
+                        <span><i class="fas fa-clock"></i> Time: TBD</span>
+                    </div>
+                </div>
+                <p><strong>Event:</strong> TBD</p>
+                <p><strong>Venue:</strong> TBD</p>
+                <p>Description of the event goes here.</p>
+                <div class="action-buttons">
+                    <button onclick="modifyEvent(this)">Modify Event</button>
+                    <button onclick="deleteEvent(this)">Delete Event</button>
+                </div>
+            `;
+            container.insertBefore(newEvent, container.firstChild);
+        }
+
+        function deleteEvent(button) {
+            const event = button.closest(".event");
+            if (confirm("Are you sure you want to delete this event?")) {
+                event.remove();
+            }
+        }
+
+        function modifyEvent(button) {
+    const event = button.closest(".event");
+
+    const newTitle = prompt("Enter new event title:", event.querySelector("h3").innerText);
+    const newDate = prompt("Enter new event date:", event.querySelector(".event-detail span").innerText.split(": ")[1]);
+    const newTime = prompt("Enter new event time:", event.querySelectorAll(".event-detail span")[1].innerText.split(": ")[1]);
+    const newEventName = prompt("Enter new event name:", event.querySelector("p:nth-of-type(1)").innerText.split(": ")[1]);
+    const newVenue = prompt("Enter new venue:", event.querySelector("p:nth-of-type(2)").innerText.split(": ")[1]);
+    const newDescription = prompt("Enter new description:", event.querySelector("p:last-of-type").innerText);
+
+    // Update the event details if new values are provided
+    if (newTitle) event.querySelector("h3").innerText = newTitle;
+    if (newDate) event.querySelector(".event-detail span").innerHTML = `<i class="fas fa-calendar-alt"></i> Date: ${newDate}`;
+    if (newTime) event.querySelectorAll(".event-detail span")[1].innerHTML = `<i class="fas fa-clock"></i> Time: ${newTime}`;
+    if (newEventName) event.querySelector("p:nth-of-type(1)").innerHTML = `<strong>Event:</strong> ${newEventName}`;
+    if (newVenue) event.querySelector("p:nth-of-type(2)").innerHTML = `<strong>Venue:</strong> ${newVenue}`;
+    if (newDescription) event.querySelector("p:last-of-type").innerText = newDescription;
+}
+
+
+        function filterEvents() {
+            const searchValue = document.getElementById("search-bar").value.toLowerCase();
+            const events = document.querySelectorAll(".event");
+
+            events.forEach(event => {
+                const title = event.querySelector("h3").innerText.toLowerCase();
+                if (title.includes(searchValue)) {
+                    event.style.display = "block";
+                } else {
+                    event.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinator Dashboard - Queries</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50; 
+            --secondary-color: #8e44ad; 
+            --background-color: #ecf0f1; 
+            --text-color: #2c3e50; 
+            --card-background: #ffffff; 
+            --hover-color: #34495e;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: var(--card-background);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .query-form {
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid var(--primary-color);
+            height: 100px;
+            resize: none;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: var(--hover-color);
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--hover-color);
+        }
+
+        .queries-container {
+            margin-top: 20px;
+        }
+
+        .query {
+            background: var(--card-background);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .query h3 {
+            color: var(--secondary-color);
+            margin: 0 0 10px;
+        }
+
+        .query p {
+            margin: 5px 0;
+        }
+
+        .query p strong {
+            color: var(--primary-color);
+        }
+
+        .answer-section {
+            margin-top: 20px;
+        }
+
+        .answer-box {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .coordinator-contact {
+            font-size: 14px;
+            margin-top: 10px;
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <a href="home.html">
+        <button class="back-button">
+            <i class="fas fa-arrow-left"></i> Back
+        </button>
+    </a>
+    
+    <div class="container">
+        <h1>Submit Your Queries</h1>
+        <p class="subtitle">Have questions? Let us know, and we’ll get back to you!</p>
+
+        <div class="query-form">
+            <div class="form-group">
+                <label for="query-message">Your Query</label>
+                <textarea id="query-message" placeholder="Enter your query here"></textarea>
+            </div>
+            <button class="submit-btn" onclick="submitQuery()">Submit Query</button>
+        </div>
+
+        <div class="queries-container" id="queries-container">
+            <h2>Previous Queries</h2>
+            <div class="query">
+                <h3>What are the upcoming events for the Robotics Club?</h3>
+                <p><strong>Query:</strong> When will the next meeting for the Robotics Club be held?</p>
+
+                <div class="answer-section">
+                    <div class="answer-box">
+                        <strong>Coordinator's Answer:</strong>
+                        <p>We are planning a meeting next week. Please stay tuned for updates!</p>
+                        <p class="coordinator-contact">For more information, contact: coordinator@example.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function submitQuery() {
+            const message = document.getElementById("query-message").value.trim();
+
+            if (!message) {
+                alert("Please fill in the query.");
+                return;
+            }
+
+            const container = document.getElementById("queries-container");
+            const newQuery = document.createElement("div");
+            newQuery.classList.add("query");
+
+            newQuery.innerHTML = `
+                <h3>${message}</h3>
+                <p><strong>Query:</strong> ${message}</p>
+
+                <div class="answer-section">
+                    <div class="answer-box">
+                        <strong>Coordinator's Answer:</strong>
+                        <p>Answer coming soon...</p>
+                        <p class="coordinator-contact">For more information, contact: coordinator@example.com</p>
+                    </div>
+                </div>
+            `;
+
+            container.appendChild(newQuery);
+
+            document.getElementById("query-message").value = "";
+        }
+    </script>
+</body>
+</html>
